@@ -13,14 +13,23 @@ public class Main {
 
         SellerDao sellerDao = DaoFactory.createSellerDao();
 
-        System.out.println("=== TEST 1 FINDBYID ===");
+        System.out.println("=== TEST 1: findById ===");
         Seller seller = sellerDao.findById(3);
 
         System.out.println(seller);
 
         System.out.println();
-        System.out.println("=== TEST 2 FINDBYDEPARTMENT ===");
+        System.out.println("=== TEST 2: findByDepartment ===");
         List<Seller> sellerList = sellerDao.findByDepartment(new Department(2, null));
+        for (Seller seller1 : sellerList) {
+
+            System.out.println(seller1);
+
+        }
+
+        System.out.println();
+        System.out.println("=== TEST 3: findAll ===");
+        sellerList = sellerDao.findAll();
         for (Seller seller1 : sellerList) {
 
             System.out.println(seller1);
