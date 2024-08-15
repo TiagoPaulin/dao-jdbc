@@ -1,7 +1,7 @@
 package org.example;
 
-import org.example.entities.Department;
-import org.example.entities.Seller;
+import org.example.model.entities.Department;
+import org.example.model.entities.Seller;
 
 import java.util.Date;
 
