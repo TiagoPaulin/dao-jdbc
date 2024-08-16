@@ -4,6 +4,7 @@ import org.example.model.dao.DaoFactory;
 import org.example.model.dao.DepartmentDao;
 import org.example.model.entities.Department;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class DepartmentTest {
@@ -12,7 +13,7 @@ public class DepartmentTest {
 
         DepartmentDao departmentDao = DaoFactory.createDepartmentDao();
         Scanner sc = new Scanner(System.in);
-        
+
         System.out.println("=== TEST 1: insert ===");
         Department newDepartment = new Department(null, "New Department");
         departmentDao.insert(newDepartment);
@@ -39,6 +40,15 @@ public class DepartmentTest {
         System.out.println("Delete completed");
 
         sc.close();
+
+        System.out.println();
+        System.out.println("=== TEST 5: findAll ===");
+        List<Department> departmentList  = departmentDao.findAll();
+        for (Department department1 : departmentList) {
+
+            System.out.println(department1);
+
+        }
 
     }
 
