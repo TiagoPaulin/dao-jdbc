@@ -4,6 +4,7 @@ import org.example.db.DB;
 import org.example.db.DbException;
 import org.example.model.dao.DepartmentDao;
 import org.example.model.entities.Department;
+import org.example.model.entities.Seller;
 
 import java.sql.*;
 import java.util.List;
@@ -76,11 +77,57 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 
     @Override
     public Department findById(Integer id) {
-        return null;
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+
+            preparedStatement = connection.prepareStatement(
+                    "SELECT * " +
+                            "FROM department " +
+                            "WHERE Id = ?"
+            );
+
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+
+                Department department = instantiateDepartment(resultSet);
+
+                return department;
+
+            }
+
+            return null;
+
+        } catch (SQLException e) {
+
+            throw new DbException(e.getMessage());
+
+        } finally {
+
+            DB.closeStatement(preparedStatement);
+            DB.closeResultSet(resultSet);
+
+        }
+
     }
 
     @Override
     public List<Department> findAll() {
         return null;
     }
+
+    private Department instantiateDepartment(ResultSet resultSet) throws SQLException {
+
+        Department department = new Department();
+        department.setId(resultSet.getInt("Id"));
+        department.setName(resultSet.getString("Name"));
+
+        return department;
+
+    }
+
 }

@@ -3,9 +3,6 @@ package org.example;
 import org.example.model.dao.DaoFactory;
 import org.example.model.dao.DepartmentDao;
 import org.example.model.entities.Department;
-import org.example.model.entities.Seller;
-
-import java.util.Date;
 
 public class DepartmentTest {
 
@@ -18,6 +15,12 @@ public class DepartmentTest {
         Department newDepartment = new Department(null, "New Department");
         departmentDao.insert(newDepartment);
         System.out.println("Inserted! new Id = " + newDepartment.getId());
+
+        System.out.println();
+        System.out.println("=== TEST 2: findById ===");
+        Department department = departmentDao.findById(3);
+
+        System.out.println(department);
 
     }
 
