@@ -1,10 +1,11 @@
 package org.example.model.dao.impl;
 
+import org.example.db.DB;
+import org.example.db.DbException;
 import org.example.model.dao.DepartmentDao;
 import org.example.model.entities.Department;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.List;
 
 public class DepartmentDaoJDBC implements DepartmentDao {
@@ -19,6 +20,47 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 
     @Override
     public void insert(Department obj) {
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+
+            preparedStatement = connection.prepareStatement(
+                    "INSERT INTO department " +
+                            "(Name) " +
+                            "VALUES " +
+                            "(?)",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+
+            preparedStatement.setString(1, obj.getName());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+
+                ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
+                if (resultSet.next()) {
+
+                    int id = resultSet.getInt(1);
+                    obj.setId(id);
+
+                }
+
+                DB.closeResultSet(resultSet);
+
+            }
+
+        } catch (SQLException e) {
+
+            throw new DbException(e.getMessage());
+
+        } finally {
+
+            DB.closeStatement(preparedStatement);
+
+        }
 
     }
 
