@@ -22,6 +22,13 @@ public class DepartmentTest {
 
         System.out.println(department);
 
+        System.out.println();
+        System.out.println("=== TEST 3: update ===");
+        department = departmentDao.findById(7);
+        department.setName("DEPPP");
+        departmentDao.update(department);
+        System.out.println("Update Completed");
+
     }
 
 }
